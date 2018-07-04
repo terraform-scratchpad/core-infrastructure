@@ -7,7 +7,7 @@ provider "azurerm" {
 #
 
 module "vault" {
-  source                = "../../modules/vault"
+  source                = "github.com/terraform-scratchpad/azure-vault"
   location              = "${var.location}"
   resource_group_name   = "${var.resource_group_name}"
   tenant_id             = "${var.tenant_id}"
@@ -19,7 +19,7 @@ module "vault" {
 # create main VMs network
 #
 module "core-network" {
-  source                = "../../modules/network"
+  source                = "github.com/terraform-scratchpad/azure-simple-vnet"
   location              = "${var.location}"
   resource_group_name   = "${var.resource_group_name}"
   network_address_space = "172.168.0.0/16"
