@@ -23,7 +23,8 @@ pipeline {
 
       stage ('Checkout') {
         steps {
-            checkout scm
+            sh 'git clone https://github.com/terraform-scratchpad/core-infrastructure.git'
+            sh 'cd core-infrastructure'
         }
       }
 
@@ -58,13 +59,5 @@ pipeline {
             sh '${TERRAFORM_CMD} show'
         }
       }
-
-      //stage ('Notification') {
-        //mail from: "jenkins@mycompany.com",
-          //   to: "devopsteam@mycompany.com",
-            // subject: "Terraform build complete",
-             //body: "Jenkins job ${env.JOB_NAME} - build ${env.BUILD_NUMBER} complete"
-      //}
     }
-
 }
