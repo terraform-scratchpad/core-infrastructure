@@ -33,39 +33,53 @@ def generator = { String alphabet, int n ->
   }
 }
 
-node {
-  env.PATH += ":/usr/local/bin/"
+pipeline {
 
-  stage ('Checkout') {
-    checkout scm
-  }
+    agent {
+        node {
+            label 'master'
+        }
+    }
 
-  stage ('Terraform Init') {
-    sh 'terraform init'
-  }
+    environment {
+        TERRAFORM_CMD='/usr/local/bin/terraform'
+    }
 
-  stage ('Terraform Workspace') {
-    sh 'terraform workspace new core-infrastructure-generator( ((\'A\'..\'Z\')+(\'0\'..\'9\')).join(), 9 )'
-  }
+    stages {
+      env.PATH += ":/usr/local/bin/"
 
-  stage ('Terraform Plan') {
-    sh 'terraform plan -no-color'
-  }
+      stage ('Checkout') {
+        checkout scm
+      }
 
-  stage ('Terraform Apply') {
-    sh 'terraform apply -no-color'
-  }
+      stage ('Terraform Init') {
+        sh '${TERRAFORM_CMD} init'
+      }
 
-  stage ('Post Run Tests') {
-    echo "Insert your infrastructure test of choice and/or application validation here."
-    sleep 2
-    sh 'terraform show'
-  }
+      stage ('Terraform Workspace') {
+        sh '${TERRAFORM_CMD} workspace new core-infrastructure-generator( ((\'A\'..\'Z\')+(\'0\'..\'9\')).join(), 9 )'
+      }
 
-  //stage ('Notification') {
-    //mail from: "jenkins@mycompany.com",
-      //   to: "devopsteam@mycompany.com",
-        // subject: "Terraform build complete",
-         //body: "Jenkins job ${env.JOB_NAME} - build ${env.BUILD_NUMBER} complete"
-  //}
+      stage ('Terraform Plan') {
+        sh '${TERRAFORM_CMD} plan -no-color'
+      }
+
+      stage ('Terraform Apply') {
+        sh '${TERRAFORM_CMD} apply -no-color'
+      }
+
+      stage ('Post Run Tests') {
+        echo "Insert your infrastructure test of choice and/or application validation here."
+        sleep 2
+        sh '${TERRAFORM_CMD} show'
+      }
+
+      //stage ('Notification') {
+        //mail from: "jenkins@mycompany.com",
+          //   to: "devopsteam@mycompany.com",
+            // subject: "Terraform build complete",
+             //body: "Jenkins job ${env.JOB_NAME} - build ${env.BUILD_NUMBER} complete"
+      //}
+    }
+    
 }
