@@ -27,6 +27,12 @@ env.TF_VAR_location                 = TF_VAR_location
 env.TF_VAR_resource_group_name      = TF_VAR_resource_group_name
 env.TF_VAR_owner_object_id          = TF_VAR_owner_object_id
 
+def generator = { String alphabet, int n ->
+  new Random().with {
+    (1..n).collect { alphabet[ nextInt( alphabet.length() ) ] }.join()
+  }
+}
+
 node {
   env.PATH += ":/usr/local/bin/"
 
@@ -34,15 +40,20 @@ node {
     checkout scm
   }
 
-  stage ('Terraform Plan') {
-    sh 'terraform plan -no-color -out=create.tfplan'
+  stage ('Terraform Init') {
+    sh 'terraform init'
   }
 
-  // Optional wait for approval
-  // input 'Deploy stack?'
+  stage ('Terraform Workspace') {
+    sh 'terraform workspace new core-infrastructure-generator( ((\'A\'..\'Z\')+(\'0\'..\'9\')).join(), 9 )'
+  }
+
+  stage ('Terraform Plan') {
+    sh 'terraform plan -no-color'
+  }
 
   stage ('Terraform Apply') {
-    sh 'terraform apply -no-color create.tfplan'
+    sh 'terraform apply -no-color'
   }
 
   stage ('Post Run Tests') {
