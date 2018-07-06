@@ -46,32 +46,43 @@ pipeline {
     }
 
     stages {
-      env.PATH += ":/usr/local/bin/"
 
       stage ('Checkout') {
-        checkout scm
+        steps {
+            checkout scm
+        }
       }
 
       stage ('Terraform Init') {
-        sh '${TERRAFORM_CMD} init'
+        steps {
+            sh '${TERRAFORM_CMD} init'
+        }
       }
 
       stage ('Terraform Workspace') {
-        sh '${TERRAFORM_CMD} workspace new core-infrastructure-generator( ((\'A\'..\'Z\')+(\'0\'..\'9\')).join(), 9 )'
+        steps {
+            sh '${TERRAFORM_CMD} workspace new core-infrastructure-generator( ((\'A\'..\'Z\')+(\'0\'..\'9\')).join(), 9 )'
+        }
       }
 
       stage ('Terraform Plan') {
-        sh '${TERRAFORM_CMD} plan -no-color'
+        steps {
+            sh '${TERRAFORM_CMD} plan -no-color'
+        }
       }
 
       stage ('Terraform Apply') {
-        sh '${TERRAFORM_CMD} apply -no-color'
+        steps {
+            sh '${TERRAFORM_CMD} apply -no-color'
+        }
       }
 
       stage ('Post Run Tests') {
-        echo "Insert your infrastructure test of choice and/or application validation here."
-        sleep 2
-        sh '${TERRAFORM_CMD} show'
+        steps {
+            echo "Insert your infrastructure test of choice and/or application validation here."
+            sleep 2
+            sh '${TERRAFORM_CMD} show'
+        }
       }
 
       //stage ('Notification') {
@@ -81,5 +92,5 @@ pipeline {
              //body: "Jenkins job ${env.JOB_NAME} - build ${env.BUILD_NUMBER} complete"
       //}
     }
-    
+
 }
