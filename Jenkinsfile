@@ -29,7 +29,7 @@ pipeline {
 
       stage ('Terraform Init') {
         steps {
-            sh '${TERRAFORM_CMD} init'
+            sh '${TERRAFORM_CMD} init -plugin-dir=/home/jenkinsuser/terraform-plugins'
         }
       }
 
