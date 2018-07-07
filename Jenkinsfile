@@ -23,8 +23,7 @@ pipeline {
 
       stage ('Checkout') {
         steps {
-            sh 'git clone https://github.com/terraform-scratchpad/core-infrastructure.git'
-            sh 'cd core-infrastructure'
+            checkout scm
         }
       }
 
