@@ -33,11 +33,11 @@ pipeline {
         }
       }
 
-      #stage ('Terraform Workspace') {
-      #  steps {
-      #      sh '${TERRAFORM_CMD} workspace new core-infrastructure-generator( ((\'A\'..\'Z\')+(\'0\'..\'9\')).join(), 9 )'
-      #  }
-      #}
+      //stage ('Terraform Workspace') {
+      //  steps {
+      //      sh '${TERRAFORM_CMD} workspace new core-infrastructure-generator( ((\'A\'..\'Z\')+(\'0\'..\'9\')).join(), 9 )'
+      //  }
+      //}
 
       stage ('Terraform Plan') {
         steps {
