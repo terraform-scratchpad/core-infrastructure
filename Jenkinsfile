@@ -1,31 +1,29 @@
-if (!fileExists('/usr/local/bin/terraform.properties')) {
-    exit
-}
-
-def tf_props = readProperties file: '/usr/local/bin/terraform.properties'
-
-env.ARM_CLIENT_ID                   = tf_pros["ARM_CLIENT_ID"]
-env.ARM_CLIENT_SECRET               = tf_pros["ARM_CLIENT_SECRET"]
-env.ARM_SUBSCRIPTION_ID             = tf_pros["ARM_SUBSCRIPTION_ID"]
-env.ARM_TENANT_ID                   = tf_pros["ARM_TENANT_ID"]
-env.TF_VAR_tenant_id                = tf_pros["TF_VAR_tenant_id"]
-env.TF_VAR_object_id                = tf_pros["TF_VAR_object_id"]
-env.TF_VAR_location                 = tf_pros["TF_VAR_location"]
-env.TF_VAR_resource_group_name      = tf_pros["TF_VAR_resource_group_name"]
-env.TF_VAR_owner_object_id          = tf_pros["TF_VAR_owner_object_id"]
 
 
-def generator = { String alphabet, int n ->
-  new Random().with {
-    (1..n).collect { alphabet[ nextInt( alphabet.length() ) ] }.join()
-  }
-}
+
+
 
 pipeline {
 
     agent {
         node {
             label 'master'
+
+            if (!fileExists('/usr/local/bin/terraform.properties')) {
+                exit
+            }
+
+            def tf_props = readProperties file: '/usr/local/bin/terraform.properties'
+
+            env.ARM_CLIENT_ID                   = tf_pros["ARM_CLIENT_ID"]
+            env.ARM_CLIENT_SECRET               = tf_pros["ARM_CLIENT_SECRET"]
+            env.ARM_SUBSCRIPTION_ID             = tf_pros["ARM_SUBSCRIPTION_ID"]
+            env.ARM_TENANT_ID                   = tf_pros["ARM_TENANT_ID"]
+            env.TF_VAR_tenant_id                = tf_pros["TF_VAR_tenant_id"]
+            env.TF_VAR_object_id                = tf_pros["TF_VAR_object_id"]
+            env.TF_VAR_location                 = tf_pros["TF_VAR_location"]
+            env.TF_VAR_resource_group_name      = tf_pros["TF_VAR_resource_group_name"]
+            env.TF_VAR_owner_object_id          = tf_pros["TF_VAR_owner_object_id"]
         }
     }
 
