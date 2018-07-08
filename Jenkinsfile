@@ -1,17 +1,8 @@
-
-
-
-
-
 pipeline {
 
     agent {
         node {
             label 'master'
-
-            if (!fileExists('/usr/local/bin/terraform.properties')) {
-                exit
-            }
 
             def tf_props = readProperties file: '/usr/local/bin/terraform.properties'
 
