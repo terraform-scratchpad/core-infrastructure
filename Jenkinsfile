@@ -21,21 +21,21 @@ pipeline {
 
       stage ('Terraform Init') {
         steps {
-            load "$BUILD_PROPERTIES_PATH/build.properties"
+            load "$BUILD_PROPERTIES_PATH/build.groovy"
             sh '${TERRAFORM_CMD} init'
         }
       }
 
       stage ('Terraform Plan') {
         steps {
-            load "$BUILD_PROPERTIES_PATH/build.properties"
+            load "$BUILD_PROPERTIES_PATH/build.groovy"
             sh '${TERRAFORM_CMD} plan -no-color'
         }
       }
 
       stage ('Terraform Apply') {
         steps {
-            load "$BUILD_PROPERTIES_PATH/build.properties"
+            load "$BUILD_PROPERTIES_PATH/build.groovy"
             sh '${TERRAFORM_CMD} apply -no-color'
         }
       }
