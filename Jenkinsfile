@@ -36,7 +36,7 @@ pipeline {
       stage ('Terraform Apply') {
         steps {
             load "$BUILD_PROPERTIES_PATH/build.groovy"
-            sh '${TERRAFORM_CMD} apply -no-color'
+            sh '${TERRAFORM_CMD} apply -no-color -auto-approve'
         }
       }
 
