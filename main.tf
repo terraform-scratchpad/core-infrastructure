@@ -2,6 +2,15 @@ provider "azurerm" {
   version = "1.8.0"
 }
 
+
+#
+# Create Resource Group
+#
+resource "azurerm_resource_group" "tf-resource-group" {
+  location = "${var.location}"
+  name = "${var.resource_group_name}"
+}
+
 #
 # creates the key vault to store secrets
 #
