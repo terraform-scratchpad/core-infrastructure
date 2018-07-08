@@ -3,10 +3,6 @@ pipeline {
     agent {
         node {
             label 'master'
-
-            def tf_props = readProperties file: '/usr/local/bin/terraform.properties'
-
-
         }
     }
 
@@ -27,12 +23,6 @@ pipeline {
             sh '${TERRAFORM_CMD} init'
         }
       }
-
-      //stage ('Terraform Workspace') {
-      //  steps {
-      //      sh '${TERRAFORM_CMD} workspace new core-infrastructure-generator( ((\'A\'..\'Z\')+(\'0\'..\'9\')).join(), 9 )'
-      //  }
-      //}
 
       stage ('Terraform Plan') {
         steps {
