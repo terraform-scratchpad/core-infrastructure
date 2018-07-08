@@ -8,7 +8,7 @@ pipeline {
 
     environment {
         TERRAFORM_CMD='/usr/local/bin/terraform'
-        BUILD_PROPERTIES_PATH'/usr/local/bin'
+        BUILD_PROPERTIES_PATH='/usr/local/bin'
     }
 
     stages {
