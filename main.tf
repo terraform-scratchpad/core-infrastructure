@@ -1,3 +1,11 @@
+terraform {
+  backend "azurerm" {
+    storage_account_name  = "lvmhtfstate"
+    container_name        = "tfstate"
+    key                   = "test.core-infrastructure.tfstate"
+  }
+}
+
 provider "azurerm" {
   version = "1.8.0"
 }
