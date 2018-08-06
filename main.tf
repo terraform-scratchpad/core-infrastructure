@@ -2,7 +2,7 @@ terraform {
   backend "azurerm" {
     storage_account_name  = "lvmhtfstate"
     container_name        = "tfstate"
-    key                   = "test.core-infrastructure.tfstate"
+    key                   = "qa-core-infrastructure.tfstate"
   }
 }
 
@@ -29,6 +29,7 @@ module "vault" {
   tenant_id             = "${var.tenant_id}"
   object_id             = "${var.object_id}"
   owner_object_id       = "${var.owner_object_id}"
+  tags                  = "${var.tags}"
 }
 
 #
@@ -40,6 +41,7 @@ module "core-network" {
   resource_group_name   = "${var.resource_group_name}"
   network_address_space = "172.168.0.0/16"
   subnet_address_prefix = "172.168.1.0/24"
+  tags                  = "${var.tags}"
 }
 
 #
