@@ -19,6 +19,7 @@ resource "azurerm_resource_group" "tf-resource-group" {
   tags                  = "${var.tags}"
 }
 
+
 #
 # creates the key vault to store secrets
 #
