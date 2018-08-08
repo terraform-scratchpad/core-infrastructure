@@ -51,13 +51,19 @@ module "core-network" {
 #
 
 resource "azurerm_key_vault_secret" "core-network-id" {
-  name = "core-network-id"
-  value = "${module.core-network.core-network-id}"
+  name      = "core-network-id"
+  value     = "${module.core-network.core-network-id}"
   vault_uri = "${module.vault.vault-uri}"
 }
 
 resource "azurerm_key_vault_secret" "core-subnet-01-id" {
-  name = "core-subnet-01-id"
-  value = "${module.core-network.core-subnet-id}"
+  name      = "core-subnet-01-id"
+  value     = "${module.core-network.core-subnet-id}"
+  vault_uri = "${module.vault.vault-uri}"
+}
+
+resource "azurerm_key_vault_secret" "core-nsg-id" {
+  name      = "core-nsg-id"
+  value     = "${module.core-network.core-nsg-id}"
   vault_uri = "${module.vault.vault-uri}"
 }
