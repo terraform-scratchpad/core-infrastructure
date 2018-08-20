@@ -1,3 +1,10 @@
+# ---------------------------------------------------------
+# Template creates core infrastrucutre hosting qa envs
+# ---------------------------------------------------------
+
+#
+# using azure storage as backend
+#
 terraform {
   backend "azurerm" {
     storage_account_name  = "qatfstate"
@@ -6,8 +13,11 @@ terraform {
   }
 }
 
+#
+# ARM provider
+#
 provider "azurerm" {
-  version = "1.12.0"
+  version = "~> 1.12.0"
 }
 
 #
@@ -23,7 +33,6 @@ resource "azurerm_resource_group" "tf-resource-group" {
 #
 # creates the key vault to store secrets
 #
-
 module "vault" {
   source                = "github.com/terraform-scratchpad/azure-vault"
   location              = "${var.location}"
@@ -46,17 +55,17 @@ module "core-network" {
   tags                  = "${var.tags}"
 }
 
+
 #
 # store secrets into vault
 #
-
 resource "azurerm_key_vault_secret" "core-network-id" {
   name      = "core-network-id"
   value     = "${module.core-network.core-network-id}"
   vault_uri = "${module.vault.vault-uri}"
 }
 
-resource "azurerm_key_vault_secret" "core-subnet-01-id" {
+resource "azurerm_key_vault_secret" "core-subnet-id" {
   name      = "core-subnet-01-id"
   value     = "${module.core-network.core-subnet-id}"
   vault_uri = "${module.vault.vault-uri}"
