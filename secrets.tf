@@ -18,9 +18,3 @@ resource "azurerm_key_vault_secret" "core-nsg-id" {
   value     = "${module.core-network.core-nsg-id}"
   vault_uri = "${module.vault.vault-uri}"
 }
-
-resource "azurerm_key_vault_secret" "core-storage-account-name" {
-  name = "core-storage-account-name"
-  value = "${azurerm_storage_account.core-storage-account.name}"
-  vault_uri = "${module.vault.vault-uri}"
-}
