@@ -53,6 +53,7 @@ module "core-network" {
 #
 module "vm" {
   source                        = "github.com/terraform-scratchpad/azure-custom-image-compute"
+  
   location                      = "${var.location}"
   resource_group_name           = "${var.resource_group_name}"
   vm_flavor                     = "${var.vm_flavor}"
