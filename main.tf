@@ -20,15 +20,7 @@ provider "azurerm" {
   version = "~> 1.12.0"
 }
 
-#
-# Create Resource Group
-#
-resource "azurerm_resource_group" "tf-resource-group" {
-  location              = "${var.location}"
-  name                  = "${var.resource_group_name}"
-  tags                  = "${var.tags}"
-}
-
+provider "null" {}
 
 #
 # creates the key vault to store secrets
@@ -57,7 +49,7 @@ module "core-network" {
 }
 
 #
-# creation of the admin VM
+# creation of the admin VM (all commands should be run from this admin machine)
 #
 module "vm" {
   source                        = "github.com/terraform-scratchpad/azure-custom-image-compute"
@@ -74,15 +66,4 @@ module "vm" {
     costEntity    = "dior"
     description   = "admin VM"
   }
-}
-resource "azurerm_key_vault_secret" "store-vm-admin-username" {
-  name        = "core-admin-vm-username"
-  value       = "${module.vm.vm-admin-username}"
-  vault_uri   = "${module.vault.vault-uri}"
-}
-
-resource "azurerm_key_vault_secret" "store-vm-admin-password" {
-  name        = "core-admin-vm-password"
-  value       = "${module.vm.vm-admin-password}"
-  vault_uri   = "${module.vault.vault-uri}"
 }
