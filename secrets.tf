@@ -18,3 +18,14 @@ resource "azurerm_key_vault_secret" "core-nsg-id" {
   value     = "${module.core-network.core-nsg-id}"
   vault_uri = "${module.vault.vault-uri}"
 }
+resource "azurerm_key_vault_secret" "store-vm-admin-username" {
+  name        = "core-admin-vm-username"
+  value       = "${module.vm.vm-admin-username}"
+  vault_uri   = "${module.vault.vault-uri}"
+}
+
+resource "azurerm_key_vault_secret" "store-vm-admin-password" {
+  name        = "core-admin-vm-password"
+  value       = "${module.vm.vm-admin-password}"
+  vault_uri   = "${module.vault.vault-uri}"
+}
