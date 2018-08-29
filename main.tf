@@ -55,3 +55,34 @@ module "core-network" {
   subnet_address_prefix = "172.168.1.0/24"
   tags                  = "${var.tags}"
 }
+
+#
+# creation of the admin VM
+#
+module "admin-vm" {
+  source                        = "github.com/terraform-scratchpad/azure-custom-image-compute"
+  location                      = "${var.location}"
+  resource_group_name           = "${var.resource_group_name}"
+  vm_flavor                     = "${var.vm_flavor}"
+  custom-image-id               = "${data.azurerm_image.custom-image.id}"
+  custom-image-resource-group   = "${var.resource_group_name}"
+  subnet_id                     = "${module.core-network.core-subnet-id}"
+  nsg_id                        = "${module.core-network.core-nsg-id}"
+  tags                          = {
+    scope         = "core-qa"
+    source        = "terraform"
+    costEntity    = "dior"
+    description   = "admin VM"
+  }
+}
+resource "azurerm_key_vault_secret" "store-vm-admin-username" {
+  name        = "core-admin-vm-username"
+  value       = "${module.admin-vm.vm-admin-username}"
+  vault_uri   = "${module.vault.vault-uri}"
+}
+
+resource "azurerm_key_vault_secret" "store-vm-admin-password" {
+  name        = "core-admin-vm-password"
+  value       = "${module.admin-vm.vm-admin-password}"
+  vault_uri   = "${module.vault.vault-uri}"
+}
