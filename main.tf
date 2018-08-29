@@ -59,7 +59,7 @@ module "core-network" {
 #
 # creation of the admin VM
 #
-module "admin-vm" {
+module "vm" {
   source                        = "github.com/terraform-scratchpad/azure-custom-image-compute"
   location                      = "${var.location}"
   resource_group_name           = "${var.resource_group_name}"
@@ -77,12 +77,12 @@ module "admin-vm" {
 }
 resource "azurerm_key_vault_secret" "store-vm-admin-username" {
   name        = "core-admin-vm-username"
-  value       = "${module.admin-vm.vm-admin-username}"
+  value       = "${module.vm.vm-admin-username}"
   vault_uri   = "${module.vault.vault-uri}"
 }
 
 resource "azurerm_key_vault_secret" "store-vm-admin-password" {
   name        = "core-admin-vm-password"
-  value       = "${module.admin-vm.vm-admin-password}"
+  value       = "${module.vm.vm-admin-password}"
   vault_uri   = "${module.vault.vault-uri}"
 }
