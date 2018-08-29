@@ -21,3 +21,6 @@ data "azurerm_image" "custom-image" {
   name_regex          = "^admin-vm-\\d{4,4}-\\d{2,2}-\\d{2,2}T\\d{6,6}"
   sort_descending     = true
 }
+variable "home" {
+  description = "current host home folder"
+}
