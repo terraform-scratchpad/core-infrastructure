@@ -20,7 +20,7 @@ resource "null_resource" "post-vm-init-folders" {
 #
 resource "null_resource" "copy-creds-to-admin-vm" {
   provisioner "file" {
-    source      = "${var.home}/.secrets/"
+    source      = "${var.host_home}/.secrets/"
     destination = "/home/${module.vm.vm-admin-username}/.secrets"
     connection {
       host      = "${module.vm.vm-public-ip}"

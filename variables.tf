@@ -3,6 +3,7 @@ variable "resource_group_name" {}
 variable "tenant_id" {}
 variable "object_id" {}
 variable "owner_object_id" {}
+variable "host_home" {}
 variable "tags" {
   type = "map"
   default = {
@@ -20,7 +21,4 @@ data "azurerm_image" "custom-image" {
   resource_group_name = "${var.resource_group_name}"
   name_regex          = "^admin-vm-\\d{4,4}-\\d{2,2}-\\d{2,2}T\\d{6,6}"
   sort_descending     = true
-}
-variable "home" {
-  description = "current host home folder"
 }
